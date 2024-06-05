@@ -1,4 +1,4 @@
-import { Button, PasswordInput, TextInput } from '@mantine/core';
+import { Button, Container, PasswordInput, TextInput } from '@mantine/core';
 import { useState } from 'react';
 import useUser from '../hooks/useUser';
 import { Circles } from 'react-loader-spinner';
@@ -28,7 +28,7 @@ function SignInPage() {
           <Circles />
         </>
       ) : (
-        <>
+        <Container size="xs">
           <h1>Sign In</h1>
           {error && <p style={{ color: 'red' }}>{error}</p>}
           <TextInput
@@ -36,6 +36,7 @@ function SignInPage() {
             value={loginId}
             onChange={(event) => setLoginId(event.currentTarget.value)}
             required
+            style={{ marginBottom: 5 }}
           />
           <PasswordInput
             label="Password"
@@ -43,8 +44,10 @@ function SignInPage() {
             onChange={(event) => setPassword(event.currentTarget.value)}
             required
           />
-          <Button onClick={handleLogin}>Sign In</Button>
-        </>
+          <Button onClick={handleLogin} style={{ marginTop: 20 }}>
+            Sign In
+          </Button>
+        </Container>
       )}
     </>
   );
