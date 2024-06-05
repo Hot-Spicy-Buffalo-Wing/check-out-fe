@@ -1,20 +1,21 @@
-import { useState, useEffect } from 'react';
 import {
-  Modal,
-  Select,
   Box,
   Button,
-  MantineProvider,
-  createTheme,
-  Image,
   Grid,
+  Image,
+  LoadingOverlay,
+  MantineProvider,
+  Modal,
+  Select,
+  createTheme,
 } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import useSWR from 'swr';
 import { LookBook, createLookBook } from '../api/ai';
-import useUser from '../hooks/useUser';
 import { updateUser } from '../api/auth';
-import { Link } from 'react-router-dom';
 import area from '../data/area';
+import useUser from '../hooks/useUser';
 
 const genderOptions = [
   { value: '여자', label: '여자' },
@@ -59,10 +60,12 @@ function MainPage() {
   const [city, setCity] = useState<string>('강남구');
   const [district, setDistrict] = useState<string>('역삼동');
   const today = new Date().toISOString().split('T')[0];
+  const [loading, setLoading] = useState(false);
 
   const { user } = useUser();
-  const { data } = useSWR<{ total: number; list: LookBook[] }>('/ai');
-  const lookBookData = data;
+  const { data: lookBookData } = useSWR<{ total: number; list: LookBook[] }>(
+    '/ai'
+  );
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -127,6 +130,7 @@ function MainPage() {
     }
 
     try {
+      setLoading(true);
       await createLookBook({
         area: { province, city, district },
         TPO: selectedTPO,
@@ -137,6 +141,8 @@ function MainPage() {
           (err.response?.data?.message || err.message)
       );
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -160,6 +166,7 @@ function MainPage() {
   return (
     <MantineProvider theme={theme}>
       <h1>Welcome to the Main Page</h1>
+      <LoadingOverlay visible={loading} />
       <Grid>
         <Box style={{ padding: '10px', width: '50%' }}>
           {renderTodayLookBook()}
