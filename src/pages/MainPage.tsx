@@ -70,7 +70,7 @@ function MainPage() {
     } catch (err: any) {
       setError(
         'Failed to update user info: ' +
-          (err.response?.data?.message || err.message),
+          (err.response?.data?.message || err.message)
       );
     }
   };
@@ -82,6 +82,7 @@ function MainPage() {
       <p>Age Range: {userInfo.ageRange}</p>
 
       <Link to="/look-books">LookBook list</Link>
+      <Link to="/posts">Post list</Link>
 
       <Modal
         opened={isModalOpen}
