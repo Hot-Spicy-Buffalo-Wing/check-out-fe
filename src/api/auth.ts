@@ -13,3 +13,8 @@ export const login = (payload: { loginId: string; password: string }) =>
   api
     .post<{ accessToken: string; refreshToken: string }>('/auth/login', payload)
     .then((res) => res.data);
+
+export const updateUser = (payload: { gender: string; ageRange: string }) =>
+  api
+    .patch<{ gender: string; ageRange: string }>('/user', payload)
+    .then((res) => res.data);
