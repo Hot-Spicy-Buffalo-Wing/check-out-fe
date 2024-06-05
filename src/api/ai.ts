@@ -9,16 +9,13 @@ interface LookBookPayload {
   TPO: string[];
 }
 
-interface LookBook {
+export interface LookBook {
   id: number;
   createdAt: string;
   authorId: string;
   prompt: string;
   imageUrl: string;
 }
-
-export const getLookBookList = () =>
-  api.get<{ total: number; list: LookBook[] }>('/ai').then((res) => res.data);
 
 export const createLookBook = (payload: LookBookPayload) =>
   api

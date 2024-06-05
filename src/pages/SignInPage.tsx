@@ -1,9 +1,4 @@
-import {
-  Button,
-  MantineProvider,
-  PasswordInput,
-  TextInput,
-} from '@mantine/core';
+import { Button, PasswordInput, TextInput } from '@mantine/core';
 import { useState } from 'react';
 import useUser from '../hooks/useUser';
 
@@ -22,7 +17,7 @@ function SignInPage() {
   };
 
   return (
-    <MantineProvider>
+    <>
       <h1>Sign In</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <TextInput
@@ -38,7 +33,7 @@ function SignInPage() {
         required
       />
       <Button onClick={handleLogin}>Sign In</Button>
-    </MantineProvider>
+    </>
   );
 }
 

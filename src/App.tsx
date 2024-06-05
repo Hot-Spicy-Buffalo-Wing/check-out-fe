@@ -10,6 +10,8 @@ import UserProvider from './hooks/UserProvider';
 import useUser from './hooks/useUser';
 import { SWRConfig } from 'swr';
 import api from './api';
+import LookBookPage from './pages/LookBookPage';
+import { MantineProvider } from '@mantine/core';
 
 const Router = () => {
   const { user, loading } = useUser();
@@ -20,6 +22,7 @@ const Router = () => {
         {user ? (
           <>
             <Route path="/main" element={<MainPage />} />
+            <Route path="/look-books" element={<LookBookPage />} />
             <Route path="*" element={<Navigate to="/main" />} />
           </>
         ) : (
@@ -40,9 +43,11 @@ function App() {
     <SWRConfig
       value={{ fetcher: (url: string) => api.get(url).then((res) => res.data) }}
     >
-      <UserProvider>
-        <Router />
-      </UserProvider>
+      <MantineProvider>
+        <UserProvider>
+          <Router />
+        </UserProvider>
+      </MantineProvider>
     </SWRConfig>
   );
 }
