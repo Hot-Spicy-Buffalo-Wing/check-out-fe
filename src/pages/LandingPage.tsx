@@ -1,42 +1,36 @@
-import { Title, Text, Container, Button, MantineProvider } from '@mantine/core';
+import { Title, Text, Container, Button } from '@mantine/core';
 import { Link } from 'react-router-dom';
-
-const theme = {
-  spacing: { xs: '8px', sm: '12px', md: '16px', lg: '24px', xl: '32px' },
-  component: {
-    Button: {
-      defaultProps: {
-        color: 'blue',
-        variant: 'filled',
-      },
-    },
-  },
-};
 
 function LandingPage() {
   return (
-    <MantineProvider theme={theme}>
-      <Title>
-        Automated AI code reviews for{' '}
-        <Text component="span" inherit>
-          any stack
-        </Text>
-      </Title>
+    <Container
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Title style={{ margin: 20 }}>Check-out</Title>
 
-      <Container size={640}>
+      <Container size={720} style={{ marginBottom: 20 }}>
         <Text size="lg">
-          Build more reliable software with AI companion. AI is also trained to
-          detect lazy developers who do nothing and just complain on Twitter.
+          연령대와 성별, 그리고 날씨 정보 및 TPO 정보를 이용해서 코디를
+          추천해주는 서비스입니다.
         </Text>
       </Container>
 
-      <Button variant="white" size="lg">
-        <Link to="/signup">Sign Up</Link>
-      </Button>
-      <Button size="lg">
-        <Link to="/signin">Sign In</Link>
-      </Button>
-    </MantineProvider>
+      <Container>
+        <Link to="/signup">
+          <Button variant="white" size="lg">
+            Sign Up
+          </Button>
+        </Link>
+
+        <Link to="/signin">
+          <Button size="lg">Sign In</Button>
+        </Link>
+      </Container>
+    </Container>
   );
 }
 
