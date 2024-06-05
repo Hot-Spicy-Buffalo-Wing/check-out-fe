@@ -6,7 +6,7 @@ const LookBookPage = () => {
   const { data } = useSWR<{ total: number; list: LookBook[] }>('/ai');
 
   return (
-    <Box>
+    <Box display="flex" style={{ gap: 4, flexWrap: 'wrap' }}>
       {data?.list.map((lookBook) => (
         <Box key={lookBook.id} w={300} h={400} bd="1px solid black">
           <Image
