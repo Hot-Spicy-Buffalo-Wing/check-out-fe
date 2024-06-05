@@ -1,12 +1,11 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import SignInPage from "./pages/SignInPage";
-import SignUpPage from "./pages/SignUpPage";
-import MainPage from "./pages/MainPage";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import SignInPage from './pages/SignInPage';
+import SignUpPage from './pages/SignUpPage';
+import MainPage from './pages/MainPage';
 
-import "@mantine/core/styles.layer.css";
-import "@mantine/core/styles.css";
+import '@mantine/core/styles.layer.css';
+import '@mantine/core/styles.css';
 
 function App() {
   return (

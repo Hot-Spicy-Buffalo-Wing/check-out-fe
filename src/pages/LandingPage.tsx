@@ -1,22 +1,14 @@
-import cx from "clsx";
-import {
-  Title,
-  Text,
-  Container,
-  Button,
-  Overlay,
-  MantineProvider,
-} from "@mantine/core";
-import { Link } from "react-router-dom";
+import { Title, Text, Container, Button, MantineProvider } from '@mantine/core';
+import { Link } from 'react-router-dom';
 // import classes from "./LandingPage.module.scss";
 
 const theme = {
-  spacing: { xs: 8, sm: 12, md: 16, lg: 24, xl: 32 },
+  spacing: { xs: '8px', sm: '12px', md: '16px', lg: '24px', xl: '32px' },
   component: {
     Button: {
       defaultProps: {
-        color: "blue",
-        variant: "filled",
+        color: 'blue',
+        variant: 'filled',
       },
     },
   },
@@ -25,9 +17,8 @@ const theme = {
 function LandingPage() {
   return (
     <MantineProvider theme={theme}>
-      <Overlay color="#000" opacity={0.65} zIndex={1} />
       <Title>
-        Automated AI code reviews for{" "}
+        Automated AI code reviews for{' '}
         <Text component="span" inherit>
           any stack
         </Text>
