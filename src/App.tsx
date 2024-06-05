@@ -14,6 +14,8 @@ import LookBookPage from './pages/LookBookPage';
 import { MantineProvider } from '@mantine/core';
 import PostListPage from './pages/PostListPage';
 import Layout from './layouts/layout';
+import PostCreatePage from './pages/PostCreatePage';
+import PostDetailPage from './pages/PostDetailPage';
 
 const Router = () => {
   const { user, loading } = useUser();
@@ -25,6 +27,8 @@ const Router = () => {
           <Route element={<Layout />}>
             <Route path="/main" element={<MainPage />} />
             <Route path="/posts" element={<PostListPage />} />
+            <Route path="/posts/create" element={<PostCreatePage />} />
+            <Route path="/posts/:id" element={<PostDetailPage />} />
             <Route path="/look-books" element={<LookBookPage />} />
             <Route path="*" element={<Navigate to="/main" />} />
           </Route>
