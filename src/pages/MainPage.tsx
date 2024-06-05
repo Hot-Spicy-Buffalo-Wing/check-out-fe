@@ -10,6 +10,7 @@ import {
 import api from '../api';
 import useUser from '../hooks/useUser';
 import { updateUser } from '../api/auth';
+import { Link } from 'react-router-dom';
 
 const genderOptions = [
   { value: '여자', label: '여자' },
