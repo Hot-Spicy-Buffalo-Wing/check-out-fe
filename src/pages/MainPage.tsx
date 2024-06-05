@@ -16,6 +16,7 @@ import { LookBook, createLookBook } from '../api/ai';
 import { updateUser } from '../api/auth';
 import area from '../data/area';
 import useUser from '../hooks/useUser';
+import Swal from 'sweetalert2';
 
 const genderOptions = [
   { value: '여자', label: '여자' },
@@ -126,6 +127,12 @@ function MainPage() {
 
   const handleSubmit = async () => {
     if (!selectedTPO.length) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Please select at least one TPO!',
+        showConfirmButton: false,
+        timer: 1500,
+      });
       return null;
     }
 
