@@ -14,7 +14,7 @@ import { LookBook, createLookBook } from '../api/ai';
 import useUser from '../hooks/useUser';
 import { updateUser } from '../api/auth';
 import { Link } from 'react-router-dom';
-import XLSX from 'xlsx';
+import area from '../data/area';
 
 const genderOptions = [
   { value: '여자', label: '여자' },
@@ -56,44 +56,13 @@ function MainPage() {
   const [error, setError] = useState('');
   const [selectedTPO, setSelectedTPO] = useState<string[]>([]);
   const [province, setProvince] = useState<string>('서울특별시');
-  const [cityOptions, setCityOptions] = useState<string[]>([]);
-  const [districtOptions, setDistrictOptions] = useState<string[]>([]);
+  const [city, setCity] = useState<string>('강남구');
+  const [district, setDistrict] = useState<string>('역삼동');
   const today = new Date().toISOString().split('T')[0];
 
   const { user } = useUser();
   const { data } = useSWR<{ total: number; list: LookBook[] }>('/ai');
   const lookBookData = data;
-
-  const readAreaNoFile = () => {
-    const areaNoPath = '../data/areaNo.xlsx';
-    const workbook = XLSX.readFile(areaNoPath);
-    const sheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[sheetName];
-    const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-    return data;
-  };
-
-  const handleAreaNoData = (event: any) => {
-    const selectedProvince = event.target.value;
-    setProvince(selectedProvince);
-
-    const data = readAreaNoFile();
-    const row = data.find((row: any) => row[0] === selectedProvince);
-    if (row) {
-      const cityOptions = row;
-      console.log(row);
-      //   setCityOptions(cityOptions);
-      // } else {
-      //   setCityOptions([]);
-      // }
-    }
-  };
-
-  // const handleCityChange = (event: any) => {
-  //   const selectedCity = event.target.value;
-  //   const data = readAreaNoFile();
-
-  //   const row = data.find((row: any) => row[0] === province);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -201,14 +170,51 @@ function MainPage() {
         <div style={{ width: '50%', paddingLeft: '10px' }}>
           <div>
             <h2>오늘, 나의 TPO</h2>
-            {/* Select Boxes */}
             <div>
-              {/* First Select Box */}
-              <select>{/* Options */}</select>
-              {/* Second Select Box */}
-              <select>{/* Options */}</select>
-              {/* Third Select Box */}
-              <select>{/* Options */}</select>
+              <select
+                value={province}
+                onChange={(e) => {
+                  setProvince(e.target.value);
+                  setCity(Object.keys(area[e.target.value])[0]);
+                  setDistrict(
+                    Object.keys(
+                      area[e.target.value][Object.keys(area[e.target.value])[0]]
+                    )[0]
+                  );
+                }}
+              >
+                {Object.keys(area).map((area) => (
+                  <option key={area} value={area}>
+                    {area}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={city}
+                onChange={(e) => {
+                  setCity(e.target.value);
+                  setDistrict(Object.keys(area[province][e.target.value])[0]);
+                }}
+              >
+                {area[province] &&
+                  Object.keys(area[province]).map((city) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+              </select>
+              <select
+                value={district}
+                onChange={(e) => setDistrict(e.target.value)}
+              >
+                {area[province] &&
+                  area[province][city] &&
+                  Object.keys(area[province][city]).map((district) => (
+                    <option key={district} value={district}>
+                      {district}
+                    </option>
+                  ))}
+              </select>
             </div>
             {/* Toggle Button */}
             <div></div>
