@@ -59,7 +59,7 @@ function MainPage() {
   const [selectedTPO, setSelectedTPO] = useState<string[]>([]);
   const [province, setProvince] = useState<string>('서울특별시');
   const [city, setCity] = useState<string>('강남구');
-  const [district, setDistrict] = useState<string>('역삼동');
+  const [district, setDistrict] = useState<string>('청담동');
   const today = new Date().toISOString().split('T')[0];
   const [loading, setLoading] = useState(false);
 
@@ -182,86 +182,69 @@ function MainPage() {
           <div>
             <h2>오늘, 나의 TPO</h2>
             <div>
-              <select
+              <Select
                 value={province}
-                onChange={(e) => {
-                  setProvince(e.target.value);
-                  setCity(Object.keys(area[e.target.value])[0]);
+                onChange={(value) => {
+                  if (!value) return;
+                  setProvince(value);
+                  setCity(Object.keys(area[value])[0]);
                   setDistrict(
-                    Object.keys(
-                      area[e.target.value][Object.keys(area[e.target.value])[0]]
-                    )[0]
+                    Object.keys(area[value][Object.keys(area[value])[0]])[0]
                   );
                 }}
-              >
-                {Object.keys(area).map((area) => (
-                  <option key={area} value={area}>
-                    {area}
-                  </option>
-                ))}
-              </select>
-              <select
+                data={Object.keys(area)}
+              />
+              <Select
                 value={city}
-                onChange={(e) => {
-                  setCity(e.target.value);
-                  setDistrict(Object.keys(area[province][e.target.value])[0]);
+                onChange={(value) => {
+                  if (!value) return;
+                  setCity(value);
+                  setDistrict(Object.keys(area[province][value])[0]);
                 }}
-              >
-                {area[province] &&
-                  Object.keys(area[province]).map((city) => (
-                    <option key={city} value={city}>
-                      {city}
-                    </option>
-                  ))}
-              </select>
-              <select
+                data={Object.keys(area[province])}
+              />
+              <Select
                 value={district}
-                onChange={(e) => setDistrict(e.target.value)}
-              >
-                {area[province] &&
-                  area[province][city] &&
-                  Object.keys(area[province][city]).map((district) => (
-                    <option key={district} value={district}>
-                      {district}
-                    </option>
-                  ))}
-              </select>
+                onChange={(value) => value && setDistrict(value)}
+                data={Object.keys(area[province][city])}
+              />
             </div>
-            <div></div>
-            {[
-              '꾸안꾸',
-              '여름코디',
-              '데일리',
-              '데이트',
-              '캠퍼스룩',
-              '여행',
-              '출근룩',
-              '하객룩',
-              '휴양지',
-              '놀이공원',
-              '카페',
-              '운동',
-              '축제',
-              '파티',
-              '소개팅',
-            ].map((option) => (
-              <button
-                key={option}
-                style={{
-                  backgroundColor: selectedTPO.includes(option)
-                    ? 'green'
-                    : 'initial',
-                }}
-                onClick={() => handleTPOSelect(option)}
-              >
-                {option}
-              </button>
-            ))}
+            <Box display="flex" style={{ gap: 4, flexWrap: 'wrap' }}>
+              {[
+                '꾸안꾸',
+                '여름코디',
+                '데일리',
+                '데이트',
+                '캠퍼스룩',
+                '여행',
+                '출근룩',
+                '하객룩',
+                '휴양지',
+                '놀이공원',
+                '카페',
+                '운동',
+                '축제',
+                '파티',
+                '소개팅',
+              ].map((option) => (
+                <Button
+                  key={option}
+                  style={
+                    selectedTPO.includes(option)
+                      ? { backgroundColor: 'green' }
+                      : {}
+                  }
+                  onClick={() => handleTPOSelect(option)}
+                >
+                  {option}
+                </Button>
+              ))}
+            </Box>
           </div>
           {/* Submit Button */}
-          <button onClick={handleSubmit}>
+          <Button onClick={handleSubmit}>
             check-out, 오늘 입을 옷 추천해줘
-          </button>
+          </Button>
         </div>
       </Grid>
 
