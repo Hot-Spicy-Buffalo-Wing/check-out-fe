@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
 import useSWR from 'swr';
+import { login } from '../api/auth';
 
 interface User {
   gender: '남자';
@@ -8,8 +9,22 @@ interface User {
 
 export const useUserProvider = () => {
   const { data: user } = useSWR<User>('/user');
+  const handleLogin = async (payload: Parameters<typeof login>[0]) => {
+    try {
+      const response = await login(payload);
 
-  return { user };
+      if (response.accessToken && response.refreshToken) {
+        localStorage.setItem('accessToken', response.accessToken);
+        localStorage.setItem('refreshToken', response.refreshToken);
+      } else {
+        throw 'Invalid response from server';
+      }
+    } catch (err: any) {
+      throw 'Login failed: ' + (err.response?.data?.message || err.message);
+    }
+  };
+
+  return { user, login: handleLogin };
 };
 
 export const userContext = createContext<

@@ -1,32 +1,23 @@
-import React, { useState } from 'react';
 import {
-  TextInput,
-  PasswordInput,
   Button,
   MantineProvider,
+  PasswordInput,
+  TextInput,
 } from '@mantine/core';
-import api from '../api';
+import { useState } from 'react';
+import useUser from '../hooks/useUser';
 
 function SignInPage() {
+  const { login } = useUser();
   const [loginId, setLoginId] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   //  Login Logic
   const handleLogin = async () => {
     try {
-      const response = await api.post(`/auth/login`, {
-        loginId,
-        password,
-      });
-
-      if (response.data.accessToken && response.data.refreshToken) {
-        localStorage.setItem('accessToken', response.data.accessToken);
-        localStorage.setItem('refreshToken', response.data.refreshToken);
-      } else {
-        setError('Invalid response from server');
-      }
+      await login({ loginId, password });
     } catch (err: any) {
-      setError('Login failed: ' + (err.response?.data?.message || err.message));
+      setError(err);
     }
   };
 
