@@ -1,10 +1,20 @@
 import { createContext, useContext } from 'react';
+import useSWR from 'swr';
 
-export const useUserProvider = () => {};
+interface User {
+  gender: '남자';
+  ageRange: '20대 초반';
+}
 
-export const userContext = createContext<ReturnType<
-  typeof useUserProvider
-> | null>(undefined);
+export const useUserProvider = () => {
+  const user = useSWR<User>('/user');
+
+  return { user };
+};
+
+export const userContext = createContext<
+  ReturnType<typeof useUserProvider> | undefined
+>(undefined);
 
 const useUser = () => {
   const value = useContext(userContext);
