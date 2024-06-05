@@ -54,7 +54,7 @@ function MainPage() {
   const [selectedTPO, setSelectedTPO] = useState<string[]>([]);
   const today = new Date().toISOString().split('T')[0];
 
-  const { user, loading } = useUser();
+  const { user } = useUser();
   const { data } = useSWR<{ total: number; list: LookBook[] }>('/ai');
   const lookBookData = data;
 

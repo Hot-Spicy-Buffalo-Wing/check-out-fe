@@ -2,6 +2,7 @@ import { Box, Table, Button } from '@mantine/core';
 
 import useSWR from 'swr';
 import { Post } from '../api/post';
+import { Link } from 'react-router-dom';
 
 const PostListPage = () => {
   const { data } = useSWR<{ total: number; list: Post[] }>('/post');
@@ -22,7 +23,9 @@ const PostListPage = () => {
           {data?.list.map((post) => (
             <Table.Tr key={post.id}>
               <Table.Td>{post.id}</Table.Td>
-              <Table.Td>{post.contents.title}</Table.Td>
+              <Table.Td>
+                <Link to={`/posts/${post.id}`}>{post.contents.title}</Link>
+              </Table.Td>
               <Table.Td>{post.author.name}</Table.Td>
               <Table.Td>{post.views}</Table.Td>
               <Table.Td>{post.createdAt}</Table.Td>
@@ -31,7 +34,9 @@ const PostListPage = () => {
         </Table.Tbody>
       </Table>
       <Box>
-        <Button>Create Post</Button>
+        <Link to="/posts/create">
+          <Button>Create Post</Button>
+        </Link>
       </Box>
     </Box>
   );
