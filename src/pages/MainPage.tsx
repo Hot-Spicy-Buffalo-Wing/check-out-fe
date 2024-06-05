@@ -6,6 +6,8 @@ import {
   Button,
   MantineProvider,
   createTheme,
+  Image,
+  Grid,
 } from '@mantine/core';
 import useSWR from 'swr';
 import { LookBook, createLookBook } from '../api/ai';
@@ -91,9 +93,13 @@ function MainPage() {
       .split('T')[0];
     if (lastItemCreatedAt === today) {
       return (
-        <img
+        <Image
           src={lookBookData.list[lookBookData.list.length - 1].imageUrl}
           alt="Today's Look"
+          width="100%"
+          radius="md"
+          fit="contain"
+          height={600}
         />
       );
     } else {
@@ -153,53 +159,61 @@ function MainPage() {
   return (
     <MantineProvider theme={theme}>
       <h1>Welcome to the Main Page</h1>
-      <div>{renderTodayLookBook()}</div>
-
-      <div>
-        <h2>오늘, 나의 TPO</h2>
-        {/* Select Boxes */}
-        <div>
-          {/* First Select Box */}
-          <select>{/* Options */}</select>
-          {/* Second Select Box */}
-          <select>{/* Options */}</select>
-          {/* Third Select Box */}
-          <select>{/* Options */}</select>
-        </div>
-        {/* Toggle Button */}
-        <div></div>
-        {[
-          '꾸안꾸',
-          '여름코디',
-          '데일리',
-          '데이트',
-          '캠퍼스룩',
-          '여행',
-          '출근룩',
-          '하객룩',
-          '휴양지',
-          '놀이공원',
-          '카페',
-          '운동',
-          '축제',
-          '파티',
-          '소개팅',
-        ].map((option) => (
-          <button
-            key={option}
-            style={{
-              backgroundColor: selectedTPO.includes(option)
-                ? 'green'
-                : 'initial',
-            }}
-            onClick={() => handleTPOSelect(option)}
-          >
-            {option}
+      <Grid>
+        <Box style={{ padding: '10px', width: '50%' }}>
+          {renderTodayLookBook()}
+        </Box>
+        <div style={{ width: '50%', paddingLeft: '10px' }}>
+          <div>
+            <h2>오늘, 나의 TPO</h2>
+            {/* Select Boxes */}
+            <div>
+              {/* First Select Box */}
+              <select>{/* Options */}</select>
+              {/* Second Select Box */}
+              <select>{/* Options */}</select>
+              {/* Third Select Box */}
+              <select>{/* Options */}</select>
+            </div>
+            {/* Toggle Button */}
+            <div></div>
+            {[
+              '꾸안꾸',
+              '여름코디',
+              '데일리',
+              '데이트',
+              '캠퍼스룩',
+              '여행',
+              '출근룩',
+              '하객룩',
+              '휴양지',
+              '놀이공원',
+              '카페',
+              '운동',
+              '축제',
+              '파티',
+              '소개팅',
+            ].map((option) => (
+              <button
+                key={option}
+                style={{
+                  backgroundColor: selectedTPO.includes(option)
+                    ? 'green'
+                    : 'initial',
+                }}
+                onClick={() => handleTPOSelect(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+          {/* Submit Button */}
+          <button onClick={handleSubmit}>
+            check-out, 오늘 입을 옷 추천해줘
           </button>
-        ))}
-      </div>
-      {/* Submit Button */}
-      <button onClick={handleSubmit}>check-out, 오늘 입을 옷 추천해줘</button>
+        </div>
+      </Grid>
+
       <Box display="flex" style={{ flexDirection: 'column' }}>
         <Link to="/look-books">LookBook list</Link>
         <Link to="/posts">Post list</Link>
