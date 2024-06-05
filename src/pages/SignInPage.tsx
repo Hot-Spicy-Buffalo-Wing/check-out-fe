@@ -24,9 +24,17 @@ function SignInPage() {
   return (
     <>
       {loading ? (
-        <>
+        <Container
+          style={{
+            height: '100vh',
+            width: '100vw',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <Circles />
-        </>
+        </Container>
       ) : (
         <Container size="xs">
           <h1>Sign In</h1>
