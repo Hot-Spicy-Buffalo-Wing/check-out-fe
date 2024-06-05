@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   MantineProvider,
   Modal,
@@ -81,8 +82,10 @@ function MainPage() {
       <p>Gender: {userInfo.gender}</p>
       <p>Age Range: {userInfo.ageRange}</p>
 
-      <Link to="/look-books">LookBook list</Link>
-      <Link to="/posts">Post list</Link>
+      <Box display="flex" style={{ flexDirection: 'column' }}>
+        <Link to="/look-books">LookBook list</Link>
+        <Link to="/posts">Post list</Link>
+      </Box>
 
       <Modal
         opened={isModalOpen}
