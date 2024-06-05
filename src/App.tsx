@@ -12,7 +12,8 @@ import { SWRConfig } from 'swr';
 import api from './api';
 
 const Router = () => {
-  const { user } = useUser();
+  const { user, loading } = useUser();
+  if (loading) return null;
   return (
     <BrowserRouter>
       <Routes>

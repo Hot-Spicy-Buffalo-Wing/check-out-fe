@@ -8,7 +8,7 @@ interface User {
 }
 
 export const useUserProvider = () => {
-  const { data: user } = useSWR<User>('/user');
+  const { data: user, isLoading } = useSWR<User>('/user');
   const handleLogin = async (payload: Parameters<typeof login>[0]) => {
     try {
       const response = await login(payload);
@@ -24,7 +24,7 @@ export const useUserProvider = () => {
     }
   };
 
-  return { user, login: handleLogin };
+  return { user, login: handleLogin, loading: isLoading };
 };
 
 export const userContext = createContext<
