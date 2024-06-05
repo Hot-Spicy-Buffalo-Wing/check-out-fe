@@ -1,14 +1,15 @@
+import { useState, useEffect } from 'react';
 import {
+  Modal,
+  Select,
   Box,
   Button,
   MantineProvider,
-  Modal,
-  Select,
   createTheme,
 } from '@mantine/core';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import api from '../api';
+import useUser from '../hooks/useUser';
+import { updateUser } from '../api/auth';
 
 const genderOptions = [
   { value: '여자', label: '여자' },
@@ -26,6 +27,7 @@ const ageRangeOptions = [
   { value: '50대 초반', label: '50대 초반' },
   { value: '50대 후반', label: '50대 후반' },
 ];
+
 const theme = createTheme({
   components: {
     Modal: {
@@ -40,19 +42,26 @@ const theme = createTheme({
 });
 
 function MainPage() {
-  const [userInfo, setUserInfo] = useState({ gender: '', ageRange: '' });
+  const [userInfo, setUserInfo] = useState(
+    { gender: '', ageRange: '' } || null
+  );
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [gender, setGender] = useState<string>('');
-  const [ageRange, setAgeRange] = useState<string>('');
+  const [gender, setGender] = useState<string | null>('');
+  const [ageRange, setAgeRange] = useState<string | null>('');
   const [error, setError] = useState('');
+
+  const { user, loading } = useUser();
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const response = await api.get('/user');
-        setUserInfo(response.data);
+        if (!user) {
+          return null;
+        }
 
-        if (!response.data.gender || !response.data.ageRange) {
+        setUserInfo(user);
+
+        if (!user.gender || !user.ageRange) {
           setIsModalOpen(true);
         }
       } catch (err) {
@@ -61,11 +70,15 @@ function MainPage() {
     };
 
     fetchUserInfo();
-  }, []);
+  }, [user]);
 
   const handleSave = async () => {
+    if (!gender || !ageRange) {
+      return null;
+    }
+
     try {
-      await api.patch('/user', { gender, ageRange });
+      await updateUser({ gender, ageRange });
       setUserInfo({ gender, ageRange });
       setIsModalOpen(false);
     } catch (err: any) {
@@ -98,6 +111,7 @@ function MainPage() {
           placeholder="Select your gender"
           data={genderOptions}
           value={gender}
+          onChange={setGender}
           required
         />
         <Select
@@ -105,6 +119,7 @@ function MainPage() {
           placeholder="Select your age range"
           data={ageRangeOptions}
           value={ageRange}
+          onChange={setAgeRange}
           required
         />
         <Button onClick={handleSave}>이렇게 알려주기</Button>
