@@ -72,6 +72,7 @@ function MainPage() {
         }
       } catch (err) {
         console.error('Failed to fetch user info:', err);
+        console.log(userInfo);
       }
     };
 
