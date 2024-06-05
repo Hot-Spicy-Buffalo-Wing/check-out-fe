@@ -14,6 +14,7 @@ import { LookBook, createLookBook } from '../api/ai';
 import useUser from '../hooks/useUser';
 import { updateUser } from '../api/auth';
 import { Link } from 'react-router-dom';
+import XLSX from 'xlsx';
 
 const genderOptions = [
   { value: '여자', label: '여자' },
@@ -54,11 +55,45 @@ function MainPage() {
   const [ageRange, setAgeRange] = useState<string | null>('');
   const [error, setError] = useState('');
   const [selectedTPO, setSelectedTPO] = useState<string[]>([]);
+  const [province, setProvince] = useState<string>('서울특별시');
+  const [cityOptions, setCityOptions] = useState<string[]>([]);
+  const [districtOptions, setDistrictOptions] = useState<string[]>([]);
   const today = new Date().toISOString().split('T')[0];
 
   const { user } = useUser();
   const { data } = useSWR<{ total: number; list: LookBook[] }>('/ai');
   const lookBookData = data;
+
+  const readAreaNoFile = () => {
+    const areaNoPath = '../data/areaNo.xlsx';
+    const workbook = XLSX.readFile(areaNoPath);
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    return data;
+  };
+
+  const handleAreaNoData = (event: any) => {
+    const selectedProvince = event.target.value;
+    setProvince(selectedProvince);
+
+    const data = readAreaNoFile();
+    const row = data.find((row: any) => row[0] === selectedProvince);
+    if (row) {
+      const cityOptions = row;
+      console.log(row);
+      //   setCityOptions(cityOptions);
+      // } else {
+      //   setCityOptions([]);
+      // }
+    }
+  };
+
+  // const handleCityChange = (event: any) => {
+  //   const selectedCity = event.target.value;
+  //   const data = readAreaNoFile();
+
+  //   const row = data.find((row: any) => row[0] === province);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
