@@ -7,7 +7,6 @@ import {
   MantineProvider,
   createTheme,
 } from '@mantine/core';
-import api from '../api';
 import useUser from '../hooks/useUser';
 import { updateUser } from '../api/auth';
 import { Link } from 'react-router-dom';
@@ -51,7 +50,7 @@ function MainPage() {
   const [ageRange, setAgeRange] = useState<string | null>('');
   const [error, setError] = useState('');
 
-  const { user, loading } = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     const fetchUserInfo = async () => {
