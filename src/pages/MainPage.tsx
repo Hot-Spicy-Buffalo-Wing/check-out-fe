@@ -79,7 +79,7 @@ function MainPage() {
     };
 
     fetchUserInfo();
-  }, [user]);
+  }, [user, userInfo]);
 
   const renderTodayLookBook = () => {
     if (!lookBookData || !lookBookData.list || lookBookData.list.length === 0) {
