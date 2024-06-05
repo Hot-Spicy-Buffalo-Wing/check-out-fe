@@ -6,7 +6,7 @@ interface PostPayload {
   imageUrls: string[];
 }
 
-interface Post {
+export interface Post {
   id: number;
   views: number;
   createdAt: string;
