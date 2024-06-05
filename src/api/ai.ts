@@ -1,4 +1,4 @@
-import api from '.';
+import api from ".";
 
 interface LookBookPayload {
   area: {
@@ -17,9 +17,12 @@ export interface LookBook {
   imageUrl: string;
 }
 
+export const getMyLookBook = () =>
+  api.get<LookBook>(`/ai`).then((res) => res.data);
+
 export const createLookBook = (payload: LookBookPayload) =>
   api
-    .post<{ prompt: string; imageUrl: string }>('/ai', payload)
+    .post<{ prompt: string; imageUrl: string }>("/ai", payload)
     .then((res) => res.data);
 
 export const getLookBook = (id: number) =>
