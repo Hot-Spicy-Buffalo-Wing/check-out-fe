@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/local',
+  baseURL: import.meta.env.DEV ? '/local' : 'https://api.check-out.paperst.ar',
 });
 
 api.interceptors.request.use((config) => {
@@ -35,7 +35,7 @@ api.interceptors.response.use(
       }
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default api;
