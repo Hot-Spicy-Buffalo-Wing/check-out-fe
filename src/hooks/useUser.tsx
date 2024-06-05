@@ -1,14 +1,14 @@
 import { createContext, useContext } from 'react';
 import useSWR from 'swr';
-import { login } from '../api/auth';
+import { login, updateUser } from '../api/auth';
 
-interface User {
-  gender: '남자';
-  ageRange: '20대 초반';
+export interface User {
+  gender: string;
+  ageRange: string;
 }
 
 export const useUserProvider = () => {
-  const { data: user, isLoading } = useSWR<User>('/user');
+  const { data: user, isLoading, mutate } = useSWR<User>('/user');
   const handleLogin = async (payload: Parameters<typeof login>[0]) => {
     try {
       const response = await login(payload);
@@ -16,6 +16,7 @@ export const useUserProvider = () => {
       if (response.accessToken && response.refreshToken) {
         localStorage.setItem('accessToken', response.accessToken);
         localStorage.setItem('refreshToken', response.refreshToken);
+        mutate();
       } else {
         throw 'Invalid response from server';
       }
@@ -24,7 +25,19 @@ export const useUserProvider = () => {
     }
   };
 
-  return { user, login: handleLogin, loading: isLoading };
+  const handleUpdateUser = async (
+    payload: Parameters<typeof updateUser>[0],
+  ) => {
+    const response = await updateUser(payload);
+    mutate(response);
+  };
+
+  return {
+    user,
+    login: handleLogin,
+    loading: isLoading,
+    updateUser: handleUpdateUser,
+  };
 };
 
 export const userContext = createContext<

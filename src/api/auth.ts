@@ -1,4 +1,5 @@
 import api from '.';
+import { User } from '../hooks/useUser';
 
 export const register = (payload: {
   name: string;
@@ -14,7 +15,5 @@ export const login = (payload: { loginId: string; password: string }) =>
     .post<{ accessToken: string; refreshToken: string }>('/auth/login', payload)
     .then((res) => res.data);
 
-export const updateUser = (payload: { gender: string; ageRange: string }) =>
-  api
-    .patch<{ gender: string; ageRange: string }>('/user', payload)
-    .then((res) => res.data);
+export const updateUser = (payload: User) =>
+  api.patch<User>('/user', payload).then((res) => res.data);
