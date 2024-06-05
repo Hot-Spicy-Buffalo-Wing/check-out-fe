@@ -126,14 +126,11 @@ function MainPage() {
       return null;
     }
 
-    const area = {
-      province: '서울특별시',
-      city: '강남구',
-      district: '역삼동',
-    };
-
     try {
-      await createLookBook({ area: area, TPO: selectedTPO });
+      await createLookBook({
+        area: { province, city, district },
+        TPO: selectedTPO,
+      });
     } catch (err: any) {
       setError(
         'Failed to create look book: ' +
@@ -216,7 +213,6 @@ function MainPage() {
                   ))}
               </select>
             </div>
-            {/* Toggle Button */}
             <div></div>
             {[
               '꾸안꾸',
