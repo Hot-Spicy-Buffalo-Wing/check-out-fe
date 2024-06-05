@@ -7,7 +7,7 @@ interface User {
 }
 
 export const useUserProvider = () => {
-  const user = useSWR<User>('/user');
+  const { data: user } = useSWR<User>('/user');
 
   return { user };
 };
