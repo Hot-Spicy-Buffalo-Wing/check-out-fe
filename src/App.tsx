@@ -6,17 +6,20 @@ import MainPage from './pages/MainPage';
 
 import '@mantine/core/styles.layer.css';
 import '@mantine/core/styles.css';
+import UserProvider from './hooks/UserProvider';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/signin" element={<SignInPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/main" element={<MainPage />} />
-      </Routes>
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/main" element={<MainPage />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 
