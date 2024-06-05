@@ -8,7 +8,7 @@ export interface User {
 }
 
 export const useUserProvider = () => {
-  const { data: user, isLoading, mutate } = useSWR<User>('/user');
+  const { data: user, error, isLoading, mutate } = useSWR<User>('/user');
   const handleLogin = async (payload: Parameters<typeof login>[0]) => {
     try {
       const response = await login(payload);
@@ -25,8 +25,14 @@ export const useUserProvider = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    mutate(undefined);
+  };
+
   const handleUpdateUser = async (
-    payload: Parameters<typeof updateUser>[0],
+    payload: Parameters<typeof updateUser>[0]
   ) => {
     const response = await updateUser(payload);
     mutate(response);
@@ -35,7 +41,8 @@ export const useUserProvider = () => {
   return {
     user,
     login: handleLogin,
-    loading: isLoading,
+    logout: handleLogout,
+    loading: isLoading && !user && !error,
     updateUser: handleUpdateUser,
   };
 };

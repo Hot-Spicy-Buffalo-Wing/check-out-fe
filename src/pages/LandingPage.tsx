@@ -1,6 +1,5 @@
 import { Title, Text, Container, Button, MantineProvider } from '@mantine/core';
 import { Link } from 'react-router-dom';
-// import classes from "./LandingPage.module.scss";
 
 const theme = {
   spacing: { xs: '8px', sm: '12px', md: '16px', lg: '24px', xl: '32px' },

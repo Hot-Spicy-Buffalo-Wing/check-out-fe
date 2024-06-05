@@ -13,6 +13,7 @@ import api from './api';
 import LookBookPage from './pages/LookBookPage';
 import { MantineProvider } from '@mantine/core';
 import PostListPage from './pages/PostListPage';
+import Layout from './layouts/layout';
 
 const Router = () => {
   const { user, loading } = useUser();
@@ -21,12 +22,12 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         {user ? (
-          <>
+          <Route element={<Layout />}>
             <Route path="/main" element={<MainPage />} />
             <Route path="/posts" element={<PostListPage />} />
             <Route path="/look-books" element={<LookBookPage />} />
             <Route path="*" element={<Navigate to="/main" />} />
-          </>
+          </Route>
         ) : (
           <>
             <Route path="/" element={<LandingPage />} />
