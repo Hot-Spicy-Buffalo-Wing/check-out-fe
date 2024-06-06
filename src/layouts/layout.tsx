@@ -1,6 +1,6 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import useUser from '../hooks/useUser';
-import { Button } from '@mantine/core';
+import { Box, Button } from '@mantine/core';
 
 function Layout() {
   const { logout } = useUser();
@@ -9,12 +9,33 @@ function Layout() {
       <header
         style={{
           display: 'flex',
-          justifyContent: 'end',
+          justifyContent: 'flex-end',
           marginTop: '15px',
           marginRight: '20px',
         }}
       >
-        <Button onClick={logout}>로그아웃</Button>
+        <Box
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '575px',
+          }}
+        >
+          <Link to="/main">
+            <Button style={{ backgroundColor: 'burlywood' }}>
+              나의 메인 페이지
+            </Button>
+          </Link>
+          <Link to="/look-books">
+            <Button style={{ backgroundColor: 'purple' }}>
+              내가 만든 LookBook list 보기
+            </Button>
+          </Link>
+          <Link to="/posts">
+            <Button style={{ backgroundColor: 'olive' }}>게시판 보기</Button>
+          </Link>
+          <Button onClick={logout}>로그아웃</Button>
+        </Box>
       </header>
       <main>
         <Outlet />

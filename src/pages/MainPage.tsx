@@ -9,7 +9,6 @@ import {
   Select,
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import useSWR from 'swr';
 import { LookBook, createLookBook } from '../api/ai';
 import { updateUser } from '../api/auth';
@@ -268,18 +267,6 @@ function MainPage() {
           >
             입력한 정보를 바탕으로 입을 옷 추천 받기
           </Button>
-          <Box display="flex" style={{ flexDirection: 'column' }}>
-            <Link to="/look-books">
-              <Button
-                style={{ backgroundColor: 'purple', marginBottom: '10px' }}
-              >
-                내가 만든 LookBook list 보기
-              </Button>
-            </Link>
-            <Link to="/posts">
-              <Button style={{ backgroundColor: 'olive' }}>게시판 보기</Button>
-            </Link>
-          </Box>
         </div>
       </Grid>
 
