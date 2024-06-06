@@ -49,9 +49,10 @@ function MainPage() {
   const [loading, setLoading] = useState(false);
 
   const { user } = useUser();
-  const { data: lookBookData } = useSWR<{ total: number; list: LookBook[] }>(
-    '/ai'
-  );
+  const { data: lookBookData, mutate } = useSWR<{
+    total: number;
+    list: LookBook[];
+  }>('/ai');
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -150,7 +151,7 @@ function MainPage() {
         area: { province, city, district },
         TPO: selectedTPO,
       });
-      window.location.reload();
+      mutate();
     } catch (err: any) {
       setError(
         'Failed to create look book: ' +
