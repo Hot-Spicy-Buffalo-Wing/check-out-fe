@@ -19,7 +19,6 @@ const LookBookPage = () => {
         <Box
           key={lookBook.id}
           style={{
-            height: '70%',
             flex: '0 0 400px',
             border: '1px solid #95afc0',
             borderRadius: '20px',
@@ -31,8 +30,6 @@ const LookBookPage = () => {
           <Image
             src={lookBook.imageUrl}
             alt={lookBook.prompt}
-            h={300}
-            fit="contain"
             style={{ marginBottom: '30px' }}
           />
           <Text>{lookBook.prompt}</Text>
