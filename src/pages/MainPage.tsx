@@ -75,7 +75,6 @@ function MainPage() {
   }, [user, userInfo]);
 
   const renderTodayLookBook = () => {
-    console.log(lookBookData);
     if (!lookBookData) {
       return (
         <Container
@@ -151,6 +150,7 @@ function MainPage() {
         area: { province, city, district },
         TPO: selectedTPO,
       });
+      window.location.reload();
     } catch (err: any) {
       setError(
         'Failed to create look book: ' +
@@ -184,7 +184,7 @@ function MainPage() {
       <LoadingOverlay visible={loading} />
       <Grid>
         <Box style={{ width: '50%' }}>
-          <h1 style={{ textAlign: 'center' }}>Welcome to the Main Page</h1>
+          <h1 style={{ textAlign: 'center' }}>나의 메인 페이지</h1>
           <p style={{ textAlign: 'center' }}>가장 최근 생성한 나의 LookBook</p>
           {renderTodayLookBook()}
         </Box>
