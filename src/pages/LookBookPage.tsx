@@ -6,14 +6,34 @@ const LookBookPage = () => {
   const { data } = useSWR<{ total: number; list: LookBook[] }>('/ai');
 
   return (
-    <Box display="flex" style={{ gap: 4, flexWrap: 'wrap' }}>
+    <Box
+      style={{
+        display: 'flex',
+        height: '80vh',
+        width: '100vw',
+        alignItems: 'center',
+        overflow: 'scroll',
+      }}
+    >
       {data?.list.map((lookBook) => (
-        <Box key={lookBook.id} w={300} h={400} bd="1px solid black">
+        <Box
+          key={lookBook.id}
+          style={{
+            height: '70%',
+            flex: '0 0 400px',
+            border: '1px solid #95afc0',
+            borderRadius: '20px',
+            padding: '20px',
+            margin: '40px',
+            backgroundColor: '#dff9fb',
+          }}
+        >
           <Image
             src={lookBook.imageUrl}
             alt={lookBook.prompt}
-            h={200}
+            h={300}
             fit="contain"
+            style={{ marginBottom: '30px' }}
           />
           <Text>{lookBook.prompt}</Text>
         </Box>
