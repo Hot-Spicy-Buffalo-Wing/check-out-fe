@@ -1,13 +1,12 @@
 import {
   Box,
   Button,
+  Container,
   Grid,
   Image,
   LoadingOverlay,
-  MantineProvider,
   Modal,
   Select,
-  createTheme,
 } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -17,6 +16,7 @@ import { updateUser } from '../api/auth';
 import area from '../data/area';
 import useUser from '../hooks/useUser';
 import Swal from 'sweetalert2';
+import { Circles } from 'react-loader-spinner';
 
 const genderOptions = [
   { value: '여자', label: '여자' },
@@ -35,19 +35,6 @@ const ageRangeOptions = [
   { value: '50대 후반', label: '50대 후반' },
 ];
 
-const theme = createTheme({
-  components: {
-    Modal: {
-      styles: {
-        body: {
-          maxWidth: 400,
-          margin: 'auto',
-        },
-      },
-    },
-  },
-});
-
 function MainPage() {
   const [userInfo, setUserInfo] = useState(
     { gender: '', ageRange: '' } || null
@@ -60,7 +47,6 @@ function MainPage() {
   const [province, setProvince] = useState<string>('서울특별시');
   const [city, setCity] = useState<string>('강남구');
   const [district, setDistrict] = useState<string>('청담동');
-  const today = new Date().toISOString().split('T')[0];
   const [loading, setLoading] = useState(false);
 
   const { user } = useUser();
@@ -90,16 +76,40 @@ function MainPage() {
   }, [user, userInfo]);
 
   const renderTodayLookBook = () => {
-    if (!lookBookData || !lookBookData.list || lookBookData.list.length === 0) {
-      return <img src="../data/no_image.png" alt="Default" />;
+    console.log(lookBookData);
+    if (!lookBookData) {
+      return (
+        <Container
+          style={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Circles />
+        </Container>
+      );
+    } else if (lookBookData.list.length === 0) {
+      return (
+        <Container
+          style={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <p style={{ whiteSpace: 'pre-line' }}>
+            {`최근 생성한 LookBook이 없습니다!
+            오른쪽에서 정보를 선택하여 새로운 LookBook을 만들어주세요.`}
+          </p>
+        </Container>
+      );
     }
 
-    const lastItemCreatedAt = new Date(
-      lookBookData.list[lookBookData.list.length - 1].createdAt
-    )
-      .toISOString()
-      .split('T')[0];
-    if (lastItemCreatedAt === today) {
+    if (lookBookData.list[lookBookData.list.length - 1].imageUrl) {
       return (
         <Image
           src={lookBookData.list[lookBookData.list.length - 1].imageUrl}
@@ -171,17 +181,24 @@ function MainPage() {
   };
 
   return (
-    <MantineProvider theme={theme}>
-      <h1>Welcome to the Main Page</h1>
+    <>
       <LoadingOverlay visible={loading} />
       <Grid>
-        <Box style={{ padding: '10px', width: '50%' }}>
+        <Box style={{ width: '50%' }}>
+          <h1 style={{ textAlign: 'center' }}>Welcome to the Main Page</h1>
+          <p style={{ textAlign: 'center' }}>가장 최근 생성한 나의 LookBook</p>
           {renderTodayLookBook()}
         </Box>
         <div style={{ width: '50%', paddingLeft: '10px' }}>
-          <div>
-            <h2>오늘, 나의 TPO</h2>
-            <div>
+          <div style={{ width: '75%', height: '50vh' }}>
+            <h2>나의 TPO 선택하기</h2>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginBottom: '50px',
+              }}
+            >
               <Select
                 value={province}
                 onChange={(value) => {
@@ -209,7 +226,7 @@ function MainPage() {
                 data={Object.keys(area[province][city])}
               />
             </div>
-            <Box display="flex" style={{ gap: 4, flexWrap: 'wrap' }}>
+            <Box display="flex" style={{ gap: 12, flexWrap: 'wrap' }}>
               {[
                 '꾸안꾸',
                 '여름코디',
@@ -241,17 +258,30 @@ function MainPage() {
               ))}
             </Box>
           </div>
-          {/* Submit Button */}
-          <Button onClick={handleSubmit}>
-            check-out, 오늘 입을 옷 추천해줘
+          <Button
+            onClick={handleSubmit}
+            style={{
+              marginBottom: '100px',
+              backgroundColor: 'pink',
+              color: 'black',
+            }}
+          >
+            입력한 정보를 바탕으로 입을 옷 추천 받기
           </Button>
+          <Box display="flex" style={{ flexDirection: 'column' }}>
+            <Link to="/look-books">
+              <Button
+                style={{ backgroundColor: 'purple', marginBottom: '10px' }}
+              >
+                내가 만든 LookBook list 보기
+              </Button>
+            </Link>
+            <Link to="/posts">
+              <Button style={{ backgroundColor: 'olive' }}>게시판 보기</Button>
+            </Link>
+          </Box>
         </div>
       </Grid>
-
-      <Box display="flex" style={{ flexDirection: 'column' }}>
-        <Link to="/look-books">LookBook list</Link>
-        <Link to="/posts">Post list</Link>
-      </Box>
 
       <Modal
         opened={isModalOpen}
@@ -274,10 +304,11 @@ function MainPage() {
           value={ageRange}
           onChange={setAgeRange}
           required
+          style={{ marginBottom: '15px' }}
         />
         <Button onClick={handleSave}>이렇게 알려주기</Button>
       </Modal>
-    </MantineProvider>
+    </>
   );
 }
 
