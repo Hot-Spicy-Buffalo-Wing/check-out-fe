@@ -5,7 +5,13 @@ import { Box, Button } from '@mantine/core';
 function Layout() {
   const { logout } = useUser();
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+      }}
+    >
       <header
         style={{
           display: 'flex',
@@ -37,7 +43,7 @@ function Layout() {
           <Button onClick={logout}>로그아웃</Button>
         </Box>
       </header>
-      <main>
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <Outlet />
       </main>
     </div>
