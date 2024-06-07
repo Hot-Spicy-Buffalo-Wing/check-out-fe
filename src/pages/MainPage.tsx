@@ -82,10 +82,10 @@ function MainPage() {
       );
     }
 
-    if (lookBookData.list[lookBookData.list.length - 1].imageUrl) {
+    if (lookBookData.list[0].imageUrl) {
       return (
         <Image
-          src={lookBookData.list[lookBookData.list.length - 1].imageUrl}
+          src={lookBookData.list[0].imageUrl}
           alt="Today's Look"
           width="100%"
           radius="md"
