@@ -1,4 +1,4 @@
-import { Box, Button, Image, Input, Text, Textarea } from '@mantine/core';
+import { Box, Button, Image, Text, Textarea } from '@mantine/core';
 import { useState } from 'react';
 import { LookBook } from '../api/ai';
 import LookBookSelectModalButton from './LookBookSelectModalButton';
@@ -20,45 +20,140 @@ const PostCreatePage = () => {
   };
 
   return (
-    <Box
-      display="flex"
-      style={{ flexDirection: 'column', gap: 4 }}
-      p={4}
-      component="form"
-      onSubmit={upload}
-    >
-      <Box display="flex" style={{ alignItems: 'center', gap: 4 }} ta="right">
-        <Text style={{ width: 80 }}>Title</Text>
-        <Input name="titleText" required />
-      </Box>
-      <Box display="flex" style={{ gap: 4 }}>
-        <Text style={{ width: 80 }} ta="right">
-          Content
-        </Text>
-        <Textarea name="content" required />
-      </Box>
-      <Box display="flex" style={{ gap: 4 }}>
-        <Text style={{ width: 80 }} ta="right">
-          Selected LookBooks
-        </Text>
+    <Box style={{ display: 'flex', justifyContent: 'center' }}>
+      <Box
+        display="flex"
+        style={{
+          width: '80vw',
+          height: '80vh',
+          marginTop: '50px',
+        }}
+        p={4}
+        component="form"
+        onSubmit={upload}
+      >
         <Box
-          miw={200}
-          mih={200}
-          bd="1px solid black"
-          display="flex"
-          style={{ gap: 4 }}
+          style={{
+            width: '50%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+          }}
         >
-          {imageUrls.map((url) => (
-            <Image key={url} src={url} alt="LookBook" h={300} fit="contain" />
-          ))}
+          <Box
+            display="flex"
+            style={{
+              flexDirection: 'column',
+              width: '80%',
+            }}
+            ta="right"
+          >
+            <Text style={{ width: 80, textAlign: 'left', marginBottom: '5px' }}>
+              Title
+            </Text>
+            <Textarea
+              name="titleText"
+              required
+              minRows={2}
+              maxRows={2}
+              style={{ width: '100%' }}
+            />
+          </Box>
+          <Box
+            display="flex"
+            style={{
+              flexDirection: 'column',
+              width: '80%',
+            }}
+          >
+            <Text
+              style={{ width: 100, textAlign: 'left', marginBottom: '5px' }}
+            >
+              Content
+            </Text>
+            <Textarea
+              name="content"
+              autosize
+              minRows={10}
+              maxRows={10}
+              required
+              style={{ width: '100%' }}
+            />
+          </Box>
+          <Box
+            style={{
+              width: '80%',
+              justifyContent: 'center',
+              display: 'flex',
+            }}
+          >
+            <LookBookSelectModalButton
+              onAddLookBook={(lookBook: LookBook) =>
+                setImageUrls([...imageUrls, lookBook.imageUrl])
+              }
+            />
+          </Box>
+          <Box
+            style={{
+              width: '80%',
+            }}
+          >
+            <Button type="submit" style={{ width: '100%' }}>
+              Create Post
+            </Button>
+          </Box>
+        </Box>
+        <Box
+          style={{
+            width: '50%',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Box
+            display="flex"
+            style={{
+              width: '80%',
+              height: '100%',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text
+              style={{
+                width: imageUrls.length > 1 ? '600px' : '300px',
+                textAlign: 'left',
+              }}
+            >
+              Selected LookBooks
+            </Text>
+            <Box
+              miw={200}
+              mih={200}
+              bd="1px solid black"
+              display="flex"
+              style={{
+                width: imageUrls.length > 1 ? '600px' : '300px',
+                height: '76%',
+                overflow: 'auto',
+              }}
+            >
+              {imageUrls.map((url) => (
+                <Image
+                  key={url}
+                  src={url}
+                  alt="LookBook"
+                  h={'100%'}
+                  fit="contain"
+                />
+              ))}
+            </Box>
+          </Box>
         </Box>
       </Box>
-      <LookBookSelectModalButton
-        onAddLookBook={(lookBook: LookBook) =>
-          setImageUrls([...imageUrls, lookBook.imageUrl])
-        }
-      />
-      <Button type="submit">Create Post</Button>
     </Box>
   );
 };

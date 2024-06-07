@@ -1,4 +1,4 @@
-import { Box, Table, Button, useMantineTheme } from '@mantine/core';
+import { Box, Table, Button } from '@mantine/core';
 
 import useSWR from 'swr';
 import { Post } from '../api/post';
@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 const PostListPage = () => {
   const { data } = useSWR<{ total: number; list: Post[] }>('/post');
-  const theme = useMantineTheme();
 
   return (
     <Box
