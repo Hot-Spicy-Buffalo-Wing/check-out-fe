@@ -11,6 +11,7 @@ const PostCreatePage = () => {
   const navigate = useNavigate();
 
   const upload = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (imageUrls.length === 0) {
       Swal.fire({
         icon: 'error',
@@ -18,7 +19,6 @@ const PostCreatePage = () => {
       });
       return;
     }
-    e.preventDefault();
     const res = await createPost({
       title: e.currentTarget.titleText.value,
       body: e.currentTarget.content.value,

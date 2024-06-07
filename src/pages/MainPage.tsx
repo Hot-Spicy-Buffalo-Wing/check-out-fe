@@ -244,7 +244,7 @@ function MainPage() {
       </Grid>
 
       <Modal
-        opened={user === undefined}
+        opened={!user?.ageRange || !user.gender}
         onClose={() => {}}
         title="당신에 대해 알고 싶어요!"
       >
