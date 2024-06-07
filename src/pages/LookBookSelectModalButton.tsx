@@ -35,14 +35,17 @@ const LookBookSelectModalButton = ({
           {data?.list.map((lookBook) => (
             <Box
               key={lookBook.id}
-              h={400}
               bd="1px solid black"
-              style={{ position: 'relative', paddingTop: '20px' }}
+              style={{
+                position: 'relative',
+                paddingTop: '20px',
+                height: '550px',
+              }}
             >
               <Image
                 src={lookBook.imageUrl}
                 alt={lookBook.prompt}
-                h={200}
+                h={220}
                 fit="contain"
               />
               <Text style={{ margin: '30px 20px' }}>{lookBook.prompt}</Text>
