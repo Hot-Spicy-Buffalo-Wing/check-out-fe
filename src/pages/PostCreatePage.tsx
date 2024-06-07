@@ -39,7 +39,7 @@ const PostCreatePage = () => {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-around',
-            alignItems: 'flex-end',
+            alignItems: 'center',
           }}
         >
           <Box
@@ -122,7 +122,12 @@ const PostCreatePage = () => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ width: '300px', textAlign: 'left' }}>
+            <Text
+              style={{
+                width: imageUrls.length > 1 ? '600px' : '300px',
+                textAlign: 'left',
+              }}
+            >
               Selected LookBooks
             </Text>
             <Box
@@ -131,7 +136,7 @@ const PostCreatePage = () => {
               bd="1px solid black"
               display="flex"
               style={{
-                width: '300px',
+                width: imageUrls.length > 1 ? '600px' : '300px',
                 height: '76%',
                 overflow: 'auto',
               }}
