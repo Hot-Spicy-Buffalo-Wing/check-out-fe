@@ -1,5 +1,6 @@
 # Check this Frontend out! 👀
 > Check Out! You can get your personalized outfit from our AI stylist 🌊
+
 ![Service main page UI](https://github.com/Hot-Spicy-Buffalo-Wing/check-out-fe/assets/42310616/1f07584a-754e-45bd-87a0-b457bd330185)
 
 ---
