@@ -16,8 +16,12 @@ function Layout() {
         style={{
           display: 'flex',
           justifyContent: 'flex-end',
-          marginTop: '15px',
+          paddingBlock: '15px',
           marginRight: '20px',
+          position: 'sticky',
+          top: '0px',
+          backgroundColor: 'white',
+          zIndex: '100',
         }}
       >
         <Box
