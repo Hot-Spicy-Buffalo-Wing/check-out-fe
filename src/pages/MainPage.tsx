@@ -8,10 +8,9 @@ import {
   Modal,
   Select,
 } from '@mantine/core';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useSWR from 'swr';
 import { LookBook, createLookBook } from '../api/ai';
-import { updateUser } from '../api/auth';
 import area from '../data/area';
 import useUser from '../hooks/useUser';
 import Swal from 'sweetalert2';
@@ -35,10 +34,6 @@ const ageRangeOptions = [
 ];
 
 function MainPage() {
-  const [userInfo, setUserInfo] = useState(
-    { gender: '', ageRange: '' } || null
-  );
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [gender, setGender] = useState<string | null>('');
   const [ageRange, setAgeRange] = useState<string | null>('');
   const [error, setError] = useState('');
@@ -48,32 +43,11 @@ function MainPage() {
   const [district, setDistrict] = useState<string>('청담동');
   const [loading, setLoading] = useState(false);
 
-  const { user } = useUser();
+  const { user, updateUser } = useUser();
   const { data: lookBookData, mutate } = useSWR<{
     total: number;
     list: LookBook[];
   }>('/ai');
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        if (!user) {
-          return null;
-        }
-
-        setUserInfo(user);
-
-        if (!user.gender || !user.ageRange) {
-          setIsModalOpen(true);
-        }
-      } catch (err) {
-        console.error('Failed to fetch user info:', err);
-        console.log(userInfo);
-      }
-    };
-
-    fetchUserInfo();
-  }, [user, userInfo]);
 
   const renderTodayLookBook = () => {
     if (!lookBookData) {
@@ -170,8 +144,6 @@ function MainPage() {
 
     try {
       await updateUser({ gender, ageRange });
-      setUserInfo({ gender, ageRange });
-      setIsModalOpen(false);
     } catch (err: any) {
       setError(
         'Failed to update user info: ' +
@@ -272,8 +244,8 @@ function MainPage() {
       </Grid>
 
       <Modal
-        opened={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        opened={user === undefined}
+        onClose={() => {}}
         title="당신에 대해 알고 싶어요!"
       >
         {error && <p style={{ color: 'red' }}>{error}</p>}
