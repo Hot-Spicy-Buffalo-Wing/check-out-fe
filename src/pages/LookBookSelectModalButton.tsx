@@ -37,7 +37,7 @@ const LookBookSelectModalButton = ({
               key={lookBook.id}
               h={400}
               bd="1px solid black"
-              style={{ position: 'relative' }}
+              style={{ position: 'relative', paddingTop: '20px' }}
             >
               <Image
                 src={lookBook.imageUrl}
@@ -45,13 +45,13 @@ const LookBookSelectModalButton = ({
                 h={200}
                 fit="contain"
               />
-              <Text>{lookBook.prompt}</Text>
+              <Text style={{ margin: '30px 20px' }}>{lookBook.prompt}</Text>
               <Button
                 onClick={() => {
                   onAddLookBook(lookBook);
                   setShow(false);
                 }}
-                style={{ position: 'absolute', right: 0, bottom: 0 }}
+                style={{ position: 'absolute', right: 5, bottom: 5 }}
               >
                 Add
               </Button>
