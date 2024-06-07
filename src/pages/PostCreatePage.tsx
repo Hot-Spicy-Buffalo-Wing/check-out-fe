@@ -4,12 +4,20 @@ import { LookBook } from '../api/ai';
 import LookBookSelectModalButton from './LookBookSelectModalButton';
 import { createPost } from '../api/post';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const PostCreatePage = () => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const navigate = useNavigate();
 
   const upload = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (imageUrls.length === 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Please select at least one LookBook',
+      });
+      return;
+    }
     e.preventDefault();
     const res = await createPost({
       title: e.currentTarget.titleText.value,
