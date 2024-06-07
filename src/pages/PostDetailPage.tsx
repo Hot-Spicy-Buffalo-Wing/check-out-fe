@@ -28,56 +28,119 @@ const PostDetailPage = () => {
 
   return (
     <Container
-      size="sm"
       mt="md"
       style={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        minHeight: '50vh',
+        width: '80vw',
+        height: '80vh',
       }}
     >
-      <Box>
-        <Group
-          gap="xs"
-          variant="apart"
-          style={{ marginBottom: 10, marginTop: theme.spacing.sm }}
+      <Box
+        style={{
+          display: 'flex',
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Box
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            height: '20%',
+            borderBottom: '1px solid lightgrey',
+          }}
         >
-          <Text fw={700} size="xl" style={{ fontFamily: 'Roboto, sans-serif' }}>
-            {post.contents.title}
-          </Text>
-          <Badge color="pink" variant="filled" size="lg">
-            <Group>
-              <IconEye size={18} />
-              <Text>{post.views}</Text>
-            </Group>
-          </Badge>
-        </Group>
-
-        <Group
-          gap="xs"
-          align="center"
-          style={{ marginBottom: theme.spacing.sm }}
-        >
-          <Avatar src={authorAvatarUrl} size={50} radius="xl" />
-          <Stack gap={0}>
-            <Text fw={500}>{post.author.name}</Text>
-            <Text size="xs" c="dimmed">
-              Author
+          <Group
+            gap="xs"
+            variant="apart"
+            style={{
+              marginBottom: '20px',
+              marginTop: theme.spacing.sm,
+              height: '50px',
+            }}
+          >
+            <Text
+              fw={700}
+              size="xl"
+              style={{
+                fontFamily: 'Roboto, sans-serif',
+              }}
+            >
+              {post.contents.title}
             </Text>
-          </Stack>
-        </Group>
+            <Badge color="pink" variant="filled" size="lg">
+              <Group>
+                <IconEye size={18} />
+                <Text>{post.views}</Text>
+              </Group>
+            </Badge>
+          </Group>
 
-        <Text
-          size="sm"
-          style={{ marginTop: theme.spacing.sm, lineHeight: 1.6 }}
-        >
-          {post.contents.body}
-        </Text>
-        <Box display="flex" style={{ gap: 4 }}>
-          {post.imageUrls.map((url) => (
-            <Image src={url} key={url} h={400} />
-          ))}
+          <Group
+            gap="xs"
+            align="center"
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginBottom: theme.spacing.sm,
+            }}
+          >
+            <Box
+              style={{
+                display: 'flex',
+              }}
+            >
+              <Avatar src={authorAvatarUrl} size={50} radius="xl" />
+              <Stack
+                gap={0}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginLeft: '5px',
+                }}
+              >
+                <Text fw={500}>{post.author.name}</Text>
+                <Text size="xs" c="dimmed">
+                  Author
+                </Text>
+              </Stack>
+            </Box>
+            <Text>{'작성일: ' + post.createdAt.substring(0, 10)}</Text>
+          </Group>
+        </Box>
+
+        <Box style={{ display: 'flex', height: '80%', width: '100%' }}>
+          <Box
+            display="flex"
+            style={{
+              overflow: 'auto',
+              width: '55%',
+              justifyContent: post.imageUrls.length > 1 ? '' : 'center',
+              alignItems: 'center',
+            }}
+          >
+            {post.imageUrls.map((url) => (
+              <Image src={url} key={url} h={500} />
+            ))}
+          </Box>
+          <Text
+            style={{
+              marginTop: '20px',
+              marginLeft: '50px',
+              lineHeight: 1.6,
+              width: '45%',
+              borderLeft: '1px solid lightgrey',
+              paddingLeft: '20px',
+            }}
+          >
+            {post.contents.body}
+          </Text>
         </Box>
       </Box>
     </Container>
