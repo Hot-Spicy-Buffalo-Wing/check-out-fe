@@ -15,7 +15,11 @@ const LookBookSelectModalButton = ({
 
   return (
     <>
-      <Button type="button" onClick={() => setShow(true)}>
+      <Button
+        type="button"
+        onClick={() => setShow(true)}
+        style={{ width: '100%' }}
+      >
         Select LookBooks
       </Button>
       <Modal
