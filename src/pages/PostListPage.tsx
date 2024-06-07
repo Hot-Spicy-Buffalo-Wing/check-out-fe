@@ -14,7 +14,7 @@ const PostListPage = () => {
         flexDirection: 'column',
         gap: 8,
         alignItems: 'center',
-        paddingTop: '30px',
+        paddingBlock: '30px',
       }}
     >
       <Box>
