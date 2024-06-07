@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import useSWR from 'swr';
+import useSWR from 'swr/immutable';
 import { Post } from '../api/post';
 import {
   Box,
